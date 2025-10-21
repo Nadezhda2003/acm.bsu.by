@@ -1,6 +1,7 @@
 #include <fstream>
 #include <vector>
-
+#pragma GCC target("avx")
+#pragma GCC optimize("O3")
 using namespace std;
 
 int count_prev_stars(vector<int> counter_x, int prev_star, int curr_star) {
