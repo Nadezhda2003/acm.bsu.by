@@ -1,14 +1,38 @@
 #include <fstream>
 #include <vector>
+#include <algorithm>
+#include <iostream>
 #pragma GCC target("avx")
 #pragma GCC optimize("O3")
 using namespace std;
 
-int count_prev_stars(vector<int> counter_x, int prev_star, int curr_star) {
-	int count = 0;
-	for (int i = prev_star + 1; i <= curr_star; i++)
-		count += counter_x[i];
-	return count;
+const int LEAF = 524287; // 2^19 - 1
+const int SIZE = 1048575; // 2^20
+int Tree[SIZE];
+
+void modify(int x)
+{
+	int i = LEAF + x;
+	while (i >= 0)
+	{
+		Tree[i]++;
+		i = ((i + 1) >> 1) - 1;
+	}
+}
+
+int Sum_counter(int index, int curr_l, int curr_r, int l, int r)
+{
+	if (l >= curr_r || r <= curr_l)
+		return 0;
+	if (l <= curr_l && r >= curr_r)
+		return Tree[index];
+	int k = (curr_l + curr_r) >> 1;
+	return Sum_counter((index << 1) + 1, curr_l, k, l, r) + Sum_counter((index << 1) + 2, k, curr_r, l, r);
+}
+
+int sum(int l, int r)
+{
+	return Sum_counter(0, 0, LEAF + 1, l, r);
 }
 int main()
 {
@@ -17,55 +41,30 @@ int main()
 
 	int n;
 	input >> n;
-	vector<int> levels_stars(n);
-	vector<int> y_coord_stars(n);
-	vector<int> x_coord_stars(n);
-	vector<int> levels_output(n);
+	vector <int> levels(n);
+	levels[0] = 1;
+	int startX, startY;
+	input >> startX >> startY;
+	int currentY = startY, minBound = startX + 1, currentLevel = 1;
+	modify(startX);
 
-	int x_max = 0;
+	for (int j = 1; j < n; j++) {
+		input >> startX >> startY;
 
-	int x_star = 0, y_star = 0;
+		if (startY != currentY) {
+			currentY = startY;
+			minBound = 0;
+			currentLevel = 0;
+		}
 
-	for (int i = 0; i < n; i++)
-	{
-		input >> x_star >> y_star;
-		x_coord_stars[i] = x_star;
-		y_coord_stars[i] = y_star;
-
-		x_max = max(x_max, x_coord_stars[i] + 1);
-		levels_stars[i] = 0;
-		levels_output[i] = 0;
+		currentLevel += sum(minBound, startX + 1);
+		minBound = startX + 1;
+		levels[currentLevel++]++;
+		modify(startX);
 	}
 
-	vector<int> counter_x(x_max);
-	counter_x[x_coord_stars[0]]++;
-
-	int y_prev_pos = 0;
-	levels_output[0]++;
-
-	for (int i = 1; i < n; i++) {
-		if (y_coord_stars[i - 1] == y_coord_stars[i])
-		{
-			levels_stars[i] += levels_stars[i - 1];
-			levels_stars[i] += count_prev_stars(counter_x, x_coord_stars[i - 1], x_coord_stars[i]);
-			levels_stars[i]++;
-		}
-		else {
-			levels_stars[i] += levels_stars[y_prev_pos] + 1;
-			if (x_coord_stars[i] > x_coord_stars[y_prev_pos]) {
-				levels_stars[i] += count_prev_stars(counter_x, x_coord_stars[y_prev_pos], x_coord_stars[i]);
-			}
-			else if (x_coord_stars[i] < x_coord_stars[y_prev_pos])
-				levels_stars[i] -= count_prev_stars(counter_x, x_coord_stars[i], x_coord_stars[y_prev_pos]);
-			y_prev_pos = i;
-		}
-		counter_x[x_coord_stars[i]]++;
-		levels_output[levels_stars[i]]++;
-	}
-
-	for (int i = 0; i < n; i++)
-	{
-		output << levels_output[i] << '\n';
+	for (int j = 0; j < n; j++) {
+		output << levels[j] << '\n';
 	}
 	return 0;
 }
