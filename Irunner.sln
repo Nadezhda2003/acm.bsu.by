@@ -29,6 +29,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Картина", "Карт�
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Xor-пути", "Xor-пути\Xor-пути.vcxproj", "{7A3C9545-B731-470E-B5FB-6867B6A65757}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Лотерея", "Лотерея\Лотерея.vcxproj", "{61CDECE5-24F1-419C-B92A-39BDA48BB08B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -141,6 +143,14 @@ Global
 		{7A3C9545-B731-470E-B5FB-6867B6A65757}.Release|x64.Build.0 = Release|x64
 		{7A3C9545-B731-470E-B5FB-6867B6A65757}.Release|x86.ActiveCfg = Release|Win32
 		{7A3C9545-B731-470E-B5FB-6867B6A65757}.Release|x86.Build.0 = Release|Win32
+		{61CDECE5-24F1-419C-B92A-39BDA48BB08B}.Debug|x64.ActiveCfg = Debug|x64
+		{61CDECE5-24F1-419C-B92A-39BDA48BB08B}.Debug|x64.Build.0 = Debug|x64
+		{61CDECE5-24F1-419C-B92A-39BDA48BB08B}.Debug|x86.ActiveCfg = Debug|Win32
+		{61CDECE5-24F1-419C-B92A-39BDA48BB08B}.Debug|x86.Build.0 = Debug|Win32
+		{61CDECE5-24F1-419C-B92A-39BDA48BB08B}.Release|x64.ActiveCfg = Release|x64
+		{61CDECE5-24F1-419C-B92A-39BDA48BB08B}.Release|x64.Build.0 = Release|x64
+		{61CDECE5-24F1-419C-B92A-39BDA48BB08B}.Release|x86.ActiveCfg = Release|Win32
+		{61CDECE5-24F1-419C-B92A-39BDA48BB08B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
